@@ -20,9 +20,8 @@ np.random.seed(42)
 tf.random.set_seed(42)
 
 def create_lstm_model(input_shape):
-    """Create LSTM model with updated Keras 3 syntax"""
     model = Sequential([
-        Input(shape=input_shape),  # Explicitly define input shape
+        Input(shape=input_shape), 
         LSTM(128, return_sequences=True),
         BatchNormalization(),
         Dropout(0.3),
@@ -42,7 +41,6 @@ def create_lstm_model(input_shape):
     return model
 
 def train_and_evaluate_models(X_train, X_test, X_train_lstm, X_test_lstm, y_train, y_test):
-    """Train and evaluate all models"""
     results = []
     
     # Traditional ML models
@@ -52,18 +50,16 @@ def train_and_evaluate_models(X_train, X_test, X_train_lstm, X_test_lstm, y_trai
         'Gradient Boosting': GradientBoostingClassifier(random_state=42),
         'SVM': SVC(probability=True, random_state=42)
     }
-    
-    # Train and evaluate traditional models
+
     for name, model in models.items():
-        print(f"\nTraining {name}...")
+        print(f"\nTraining {name}")
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
         y_pred_proba = model.predict_proba(X_test)[:, 1]
         results.append(evaluate_model(y_test, y_pred, y_pred_proba, name))
-    
-    # Train and evaluate LSTM
-    print("\nTraining LSTM model...")
-    input_shape = (1, X_train.shape[1])  # (timesteps, features)
+
+    print("\nTraining LSTM model")
+    input_shape = (1, X_train.shape[1])  
     lstm_model = create_lstm_model(input_shape)
     
     early_stopping = EarlyStopping(
@@ -206,5 +202,5 @@ def main(data_path):
     plot_results(results, history)
 
 if __name__ == "__main__":
-    data_path = "dataset.csv"  # Update with your dataset path
+    data_path = "dataset.csv" 
     main(data_path)
