@@ -116,7 +116,7 @@ def preprocess_data(data):
     X_train_scaled = scaler.fit_transform(X_train_imputed)
     X_test_scaled = scaler.transform(X_test_imputed)
     
-    # Reshape data for LSTM (samples, timesteps, features)
+    # Reshape data for LSTM
     X_train_lstm = X_train_scaled.reshape((X_train_scaled.shape[0], 1, X_train_scaled.shape[1]))
     X_test_lstm = X_test_scaled.reshape((X_test_scaled.shape[0], 1, X_test_scaled.shape[1]))
     
@@ -174,7 +174,6 @@ def plot_results(results, history):
 
 def main(data_path):
     """Main execution function"""
-    # Load and explore data
     data = pd.read_csv(data_path)
     print("Dataset Info:")
     print(data.info())
